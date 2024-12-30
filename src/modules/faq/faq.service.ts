@@ -1,6 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { FAQRepository } from './faq.repository';
-import { CacheService } from '../cache/cache.service';
+import { CacheService } from '../../cache/cache.service';
 import { FAQ } from './faq.schema';
 
 @Injectable()

@@ -3,10 +3,10 @@ import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { MenuModule } from './menu/menu.module';
-import { FAQModule } from './faq/faq.module';
-import { OrdersModule } from './orders/orders.module';
-import { ChatbotModule } from './chatbot/chatbot.module';
+import { MenuModule } from './modules/menu/menu.module';
+import { FAQModule } from './modules/faq/faq.module';
+import { OrdersModule } from './modules/orders/orders.module';
+import { ChatbotModule } from './modules/chatbot/chatbot.module';
 
 @Module({
   imports: [

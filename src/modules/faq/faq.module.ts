@@ -3,7 +3,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { FAQ, FAQSchema } from './faq.schema';
 import { FAQService } from './faq.service';
 import { FAQController } from './faq.controller';
-import { CacheService } from '../cache/cache.service';
+import { CacheService } from '../../cache/cache.service';
 import { FAQRepository } from './faq.repository';
 
 @Module({

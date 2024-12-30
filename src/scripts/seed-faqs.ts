@@ -1,5 +1,5 @@
 import * as mongoose from 'mongoose';
-import { FAQSchema } from 'src/faq/faq.schema';
+import { FAQSchema } from 'src/modules/faq/faq.schema';
 
 const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/sushi';
 

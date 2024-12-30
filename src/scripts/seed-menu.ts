@@ -1,5 +1,5 @@
 import * as mongoose from 'mongoose';
-import { MenuItemSchema } from 'src/menu/menu.schema';
+import { MenuItemSchema } from 'src/modules/menu/menu.schema';
 
 const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/sushi';
 
