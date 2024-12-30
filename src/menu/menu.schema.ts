@@ -11,6 +11,9 @@ export class MenuItem extends Document {
 
   @Prop()
   description?: string;
+
+  @Prop({ default: 0 })
+  quantity?: number;
 }
 
 export const MenuItemSchema = SchemaFactory.createForClass(MenuItem);

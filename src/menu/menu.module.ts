@@ -8,5 +8,8 @@ import { MenuItem, MenuItemSchema } from './menu.schema';
   imports: [MongooseModule.forFeature([{ name: MenuItem.name, schema: MenuItemSchema }])],
   controllers: [MenuController],
   providers: [MenuService],
+  exports: [
+    MenuService
+  ]
 })
 export class MenuModule {}

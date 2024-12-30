@@ -71,3 +71,96 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 ## License
 
 Nest is [MIT licensed](LICENSE).
+
+## Running the app
+Using Docker Compose
+Build and start the containers:
+
+```bash
+$ docker-compose up --build
+```
+
+This command will:
+
+Build the Docker image for the application.
+Start the services defined in docker-compose.yml (MongoDB, Redis, and the NestJS backend).
+Access the application at:
+
+```bash
+http://localhost:3000
+```
+To stop the containers:
+
+```bash
+$ docker-compose down
+```
+## Running Seeds
+After starting the app, you can populate the MongoDB database with initial data using the seed script.
+
+Run the seed script:
+Full seed
+```bash
+$ npm run seed
+```
+Seed Only Menu
+Run the menu seed script:
+```bash
+$ npm run seed:menu
+```
+Seed Only FAQs
+Run the FAQ seed script:
+```bash
+$ npm run seed:faqs
+```
+
+This command will:
+
+Connect to the MongoDB instance.
+Populate the database with initial menu items.
+Check the database to verify the data:
+
+Using MongoDB CLI:
+```bash
+mongo
+use sushi
+db.menuitems.find()
+db.faqs.find()
+```
+## Running the CLI Chatbot
+You can interact with the chatbot directly from the command line interface (CLI). This is a simple way to test the chatbot functionality without needing a frontend.
+
+Run the CLI chatbot:
+
+```bash
+$ npm run chatbot:cli
+```
+Once started, you can send messages to the chatbot and see its responses. Example interactions:
+
+Ask for the menu:
+
+
+> Quiero ver el menú
+🤖 Chatbot: Aquí tienes nuestro menú:
+Sushi Roll: $10
+Sashimi: $15
+Tempura: $12
+Place an order:
+
+
+> orden
+🤖 Chatbot: Por favor, dime tu nombre, teléfono e ítems en el formato: Nombre; Teléfono; Item1:Cantidad, Item2:Cantidad.
+
+> Facundo; 123456789; Sushi Roll:2, Tempura:1
+🤖 Chatbot: Tu orden ha sido creada exitosamente. El ID de tu orden es: 64f0c1d2bcf86cd799439011
+Ask a frequently asked question:
+
+
+> pregunta
+🤖 Chatbot: Por favor, escribe tu pregunta específica.
+
+> ¿Están abiertos?
+🤖 Chatbot: Sí, estamos abiertos de 10:00 a 22:00.
+
+Type salir to exit the chatbot.
+> salir
+👋 ¡Adiós!
