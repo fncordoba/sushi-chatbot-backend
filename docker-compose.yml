@@ -1,0 +1,25 @@
+version: '3.8'
+services:
+  backend:
+    build: .
+    container_name: sushi-backend
+    ports:
+      - "3000:3000"
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/sushi
+      - REDIS_HOST=redis
+    depends_on:
+      - mongo
+      - redis
+
+  mongo:
+    image: mongo
+    container_name: sushi-mongo
+    ports:
+      - "27017:27017"
+
+  redis:
+    image: redis
+    container_name: sushi-redis
+    ports:
+      - "6379:6379"
