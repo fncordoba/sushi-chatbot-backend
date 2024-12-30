@@ -4,6 +4,7 @@ import { Order, OrderSchema } from './order.schema';
 import { OrdersController } from './orders.controller';
 import { OrdersService } from './orders.service';
 import { MenuItem, MenuItemSchema } from 'src/menu/menu.schema';
+import { OrdersRepository } from './orders.repository';
 
 @Module({
   imports: [
@@ -12,7 +13,7 @@ import { MenuItem, MenuItemSchema } from 'src/menu/menu.schema';
       { name: MenuItem.name, schema: MenuItemSchema },
     ]),
   ],  controllers: [OrdersController],
-  providers: [OrdersService],
+  providers: [OrdersService, OrdersRepository],
   exports: [OrdersService],
 })
 export class OrdersModule {}

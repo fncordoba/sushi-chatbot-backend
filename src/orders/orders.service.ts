@@ -1,21 +1,17 @@
 import { BadRequestException, Injectable, Logger } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { OrdersRepository } from './orders.repository';
 import { Order } from './order.schema';
-import { MenuItem } from 'src/menu/menu.schema';
+import { CreateOrderItemDto } from './dto/item.dto';
 
 @Injectable()
 export class OrdersService {
   private readonly logger = new Logger(OrdersService.name);
 
-  constructor(
-    @InjectModel(Order.name) private readonly orderModel: Model<Order>,
-    @InjectModel(MenuItem.name) private readonly menuItemModel: Model<MenuItem>,
-  ) {}
+  constructor(private readonly ordersRepository: OrdersRepository) {}
 
-  async createOrder(customerName: string, customerPhone: string, items: { name: string; quantity: number }[]): Promise<Order> {
+  async createOrder(customerName: string, customerPhone: string, items: CreateOrderItemDto[]): Promise<Order> {
     for (const item of items) {
-      const menuItem = await this.menuItemModel.findOne({ name: item.name }).exec();
+      const menuItem = await this.ordersRepository.findMenuItemByName(item.name);
       if (!menuItem) {
         throw new BadRequestException(`El producto "${item.name}" no existe en el menú.`);
       }
@@ -28,21 +24,22 @@ export class OrdersService {
     }
 
     for (const item of items) {
-      await this.menuItemModel.updateOne(
-        { name: item.name },
-        { $inc: { quantity: -item.quantity } },
-      ).exec();
+      await this.ordersRepository.updateMenuItemQuantity(item.name, item.quantity);
     }
 
-    const newOrder = new this.orderModel({ customerName, customerPhone, items });
+    const newOrder = {
+      customerName,
+      customerPhone,
+      items,
+    };
     this.logger.log(`Creating new order for customer: ${customerName}`);
-    return newOrder.save();
+    return this.ordersRepository.createOrder(newOrder);
   }
 
   async getOrderById(orderId: string): Promise<Order> {
     try {
       this.logger.log(`Retrieving order with ID: ${orderId}`);
-      return this.orderModel.findById(orderId).exec();
+      return this.ordersRepository.findOrderById(orderId);
     } catch (error) {
       this.logger.error(`Error retrieving order with ID: ${orderId}`, error.stack);
       throw new Error('Hubo un error al obtener la orden. Por favor, verifica el ID.');
@@ -52,7 +49,7 @@ export class OrdersService {
   async getAllOrders(): Promise<Order[]> {
     try {
       this.logger.log('Retrieving all orders');
-      return this.orderModel.find().exec();
+      return this.ordersRepository.findAllOrders();
     } catch (error) {
       this.logger.error('Error retrieving all orders', error.stack);
       throw new Error('Hubo un error al obtener las órdenes. Por favor, intenta nuevamente.');
