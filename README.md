@@ -164,3 +164,7 @@ Ask a frequently asked question:
 Type salir to exit the chatbot.
 > salir
 👋 ¡Adiós!
+
+## Cache evidence
+
+![alt text](image.png)
